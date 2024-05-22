@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActivateSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""5add789c-badd-40b9-8980-0bc45110a223"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +183,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Normal Shot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7c05309-cda7-449f-8af3-63b3ba22c099"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +206,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Spacecraft_Pitch = m_Spacecraft.FindAction("Pitch", throwIfNotFound: true);
         m_Spacecraft_Yaw = m_Spacecraft.FindAction("Yaw", throwIfNotFound: true);
         m_Spacecraft_NormalShot = m_Spacecraft.FindAction("Normal Shot", throwIfNotFound: true);
+        m_Spacecraft_ActivateSkill = m_Spacecraft.FindAction("ActivateSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +272,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Spacecraft_Pitch;
     private readonly InputAction m_Spacecraft_Yaw;
     private readonly InputAction m_Spacecraft_NormalShot;
+    private readonly InputAction m_Spacecraft_ActivateSkill;
     public struct SpacecraftActions
     {
         private @PlayerControls m_Wrapper;
@@ -259,6 +281,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Pitch => m_Wrapper.m_Spacecraft_Pitch;
         public InputAction @Yaw => m_Wrapper.m_Spacecraft_Yaw;
         public InputAction @NormalShot => m_Wrapper.m_Spacecraft_NormalShot;
+        public InputAction @ActivateSkill => m_Wrapper.m_Spacecraft_ActivateSkill;
         public InputActionMap Get() { return m_Wrapper.m_Spacecraft; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -280,6 +303,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NormalShot.started += instance.OnNormalShot;
             @NormalShot.performed += instance.OnNormalShot;
             @NormalShot.canceled += instance.OnNormalShot;
+            @ActivateSkill.started += instance.OnActivateSkill;
+            @ActivateSkill.performed += instance.OnActivateSkill;
+            @ActivateSkill.canceled += instance.OnActivateSkill;
         }
 
         private void UnregisterCallbacks(ISpacecraftActions instance)
@@ -296,6 +322,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NormalShot.started -= instance.OnNormalShot;
             @NormalShot.performed -= instance.OnNormalShot;
             @NormalShot.canceled -= instance.OnNormalShot;
+            @ActivateSkill.started -= instance.OnActivateSkill;
+            @ActivateSkill.performed -= instance.OnActivateSkill;
+            @ActivateSkill.canceled -= instance.OnActivateSkill;
         }
 
         public void RemoveCallbacks(ISpacecraftActions instance)
@@ -319,5 +348,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPitch(InputAction.CallbackContext context);
         void OnYaw(InputAction.CallbackContext context);
         void OnNormalShot(InputAction.CallbackContext context);
+        void OnActivateSkill(InputAction.CallbackContext context);
     }
 }

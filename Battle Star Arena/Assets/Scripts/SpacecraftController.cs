@@ -5,14 +5,13 @@ using UnityEngine;
 public class SpacecraftController : MonoBehaviour
 {
     private PlayerControls playerControls;
-    [SerializeField]
-    private Spacecraft spacecraft;
-    private AvengerI avenger;
+    private SpacecraftNavigation spacecraftNavigation;
+    private ISpacecraftInterface spacecraft;
     void Start()
     {
         playerControls = new PlayerControls();
-        spacecraft = GetComponent<Spacecraft>();
-        avenger = GetComponent<AvengerI>();
+        spacecraftNavigation = GetComponent<SpacecraftNavigation>();
+        spacecraft = GetComponent<ISpacecraftInterface>();
         playerControls.Enable();
     }
 
@@ -23,14 +22,19 @@ public class SpacecraftController : MonoBehaviour
         float pitchAxis = playerControls.Spacecraft.Pitch.ReadValue<float>();
         float yawAxis = playerControls.Spacecraft.Yaw.ReadValue<float> ();
         bool normalShotButton = playerControls.Spacecraft.NormalShot.IsPressed();
+        bool activateSkillButton = playerControls.Spacecraft.ActivateSkill.IsPressed();
 
-        spacecraft.SetRollAxis(rollAxis);
-        spacecraft.SetPithAxis(pitchAxis);
-        spacecraft.SetYawAxis(yawAxis);
+        spacecraftNavigation.SetRollAxis(rollAxis);
+        spacecraftNavigation.SetPithAxis(pitchAxis);
+        spacecraftNavigation.SetYawAxis(yawAxis);
 
         if(normalShotButton)
         {
-            avenger.NormalShot();
+            spacecraft.NormalShot();
+        }
+        if (activateSkillButton)
+        {
+            spacecraft.ActivateSkill();
         }
        
     }

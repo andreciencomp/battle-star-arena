@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spacecraft : MonoBehaviour
+public class SpacecraftNavigation : MonoBehaviour
 {
     private Rigidbody rig;
     private float rollAxis;

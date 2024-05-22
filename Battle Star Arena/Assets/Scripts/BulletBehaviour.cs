@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 500;
+    private float projectileSpeed = 500;
     [SerializeField]
     private float maximumRange = 800;
     private Vector3 shotPosition;
@@ -14,26 +14,22 @@ public class BulletBehaviour : MonoBehaviour
     private float damage = 5;
     private string username = "unknown";
     private float shooterSpeed;
-    
-       
 
     void Start()
     {
         shotPosition = transform.position;
         rig = GetComponent<Rigidbody>();
-       // rig.velocity = (speed + shooterSpeed)  * transform.forward;
     }
 
     // Update is called once per frame
     public void FixedUpdate()
     {
-        rig.velocity = (speed + shooterSpeed) * transform.forward;
+        rig.velocity = (projectileSpeed + shooterSpeed) * transform.forward;
         if (Vector3.Distance(shotPosition, transform.position) > maximumRange)
         {
             Destroy(this.gameObject);
 
         }
-        Debug.Log("shooter speed: " + shooterSpeed);
     }
 
     public float GetDamage()
@@ -54,6 +50,10 @@ public class BulletBehaviour : MonoBehaviour
     public void SetUsername(string username)
     {
         this.username = username;
+    }
+
+    public void SetProjectileSpeed(float speed){
+        projectileSpeed = speed;
     }
 
     public float GetShooterSpeed()

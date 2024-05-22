@@ -264,6 +264,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &224287150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224287151}
+  m_Layer: 0
+  m_Name: PowerfulCannonBulletSpawnPointLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224287151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224287150}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5804, y: -0.0007, z: 5.465}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1008406462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &300252590
 GameObject:
   m_ObjectHideFlags: 3
@@ -315,7 +346,7 @@ MonoBehaviour:
   m_FollowOffset: {x: 0, y: 1.8, z: -8.6}
   m_XDamping: 0
   m_YDamping: 0
-  m_ZDamping: 0.5
+  m_ZDamping: 0.4
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -847,7 +878,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1155066677}
   m_Follow: {fileID: 1155066677}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 5000
@@ -873,7 +904,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488519220}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.102979064, y: -0.000000008557452, z: 8.859485e-10, w: 0.99468356}
+  m_LocalRotation: {x: 0.102979064, y: 0.000000008557453, z: -8.8594865e-10, w: 0.99468356}
   m_LocalPosition: {x: 0, y: 11.8, z: -8.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1487,9 +1518,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3999415600042921865, guid: fbcb800ccfce801449476e9b94212122, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1242876875}
+    - targetCorrespondingSourceObject: {fileID: -3999415600042921865, guid: fbcb800ccfce801449476e9b94212122, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1817215692}
     - targetCorrespondingSourceObject: {fileID: -3220678132244172302, guid: fbcb800ccfce801449476e9b94212122, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1953515129}
+      addedObject: {fileID: 224287151}
+    - targetCorrespondingSourceObject: {fileID: -3220678132244172302, guid: fbcb800ccfce801449476e9b94212122, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1453285311}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbcb800ccfce801449476e9b94212122, type: 3}
       insertIndex: -1
@@ -1556,7 +1593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38781fef99c4e5b48bdeb95ec3c6efe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacecraft: {fileID: 0}
 --- !u!114 &1162452169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1570,9 +1606,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollForce: 10
-  pithForce: 30
+  pithForce: 35
   yawForce: 10
-  thurst: 500
+  thurst: 1300
 --- !u!114 &1162452172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,9 +1621,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5adfc39f577e7f43b00dfa00a91a55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToNextShot: 0.2
+  timeToNextNormalShoot: 0.1
+  timeToNextPowerfulShoot: 0.05
+  normalShootDamage: 2
+  powerfulShootDamage: 2
   mainCannonLeftSpawnPoint: {fileID: 1242876875}
-  bullet1: {fileID: 276355557920454589, guid: dd72b0ff0b9d9f44d947e34c49a4f137, type: 3}
+  mainCannonRightSpawnPoint: {fileID: 1817215692}
+  normalCannonBullet: {fileID: 9156169241644332251, guid: 40db1d1642c2d944396ed327da1104ee, type: 3}
+  powerfulCannonBullet: {fileID: 980138725977958421, guid: 06a15d7b2be3f2b459a5a5e007db0ac1, type: 3}
+  powerfulCannonLeftSpawnPoint: {fileID: 224287151}
+  powerfulCannonRightSpawnPoint: {fileID: 1453285311}
+  normalShootSpeed: 500
+  powerfulShootSpeed: 600
+  maxSkillTimer: 10
+  maxSkillCooldown: 10
 --- !u!136 &1162452175
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1739,7 +1786,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -3999415600042921865, guid: fbcb800ccfce801449476e9b94212122, type: 3}
   m_PrefabInstance: {fileID: 1155066676}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1953515128
+--- !u!1 &1453285310
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1747,81 +1794,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1953515129}
-  - component: {fileID: 1953515132}
-  - component: {fileID: 1953515131}
+  - component: {fileID: 1453285311}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: PowerfulCannonBulletSpawnPointRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1953515129
+--- !u!4 &1453285311
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953515128}
+  m_GameObject: {fileID: 1453285310}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 144}
+  m_LocalPosition: {x: 1.5804, y: -0.0007, z: 5.465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1008406462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1953515131
-MeshRenderer:
+--- !u!1 &1817215691
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953515128}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 1aec36cd1a799674bad441b234601bd4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1953515132
-MeshFilter:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817215692}
+  m_Layer: 0
+  m_Name: MainCannonBulletSpawnPointRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817215692
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953515128}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_GameObject: {fileID: 1817215691}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.4678, y: 0, z: 4.4808}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1361321844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2007455563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2001,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 5000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2001,7 +2027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014491182}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.102979064, y: -0.000000008557452, z: 8.859485e-10, w: 0.99468356}
+  m_LocalRotation: {x: 0.102979064, y: 0.000000008557453, z: -8.8594865e-10, w: 0.99468356}
   m_LocalPosition: {x: 0, y: 11.8, z: -8.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
