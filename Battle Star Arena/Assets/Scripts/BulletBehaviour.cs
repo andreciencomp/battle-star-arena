@@ -9,6 +9,7 @@ public class BulletBehaviour : MonoBehaviour
     [SerializeField]
     private float maximumRange = 800;
     private Vector3 shotPosition;
+    private int side;
     private Rigidbody rig;
     [SerializeField]
     private float damage = 5;
@@ -65,4 +66,12 @@ public class BulletBehaviour : MonoBehaviour
     {
         shooterSpeed = speed;
     } 
+
+    public int GetSide(){
+        return side;
+    }
+
+    public void SetSide(int side){
+        this.side = side;
+    }
 }

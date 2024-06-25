@@ -1,10 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AvengerI : MonoBehaviour,ISpacecraftInterface
 {
-
     [SerializeField]
     private float timeToNextNormalShoot = 0.5f;
     [SerializeField]
@@ -12,7 +12,7 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     private float normalShootTimer;
     private float powerfulShootTimer;
     private bool readyToNormalShoot;
-    private bool readyToPowerfulShoot;
+    private bool powerfullCannonReady;
     [SerializeField]
     private float normalShootDamage = 2;
     [SerializeField]
@@ -51,7 +51,7 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
         normalShootTimer = timeToNextNormalShoot;
         powerfulShootTimer = timeToNextPowerfulShoot;
         readyToNormalShoot = true;
-        readyToPowerfulShoot = true;
+        powerfullCannonReady = true;
         skillActivated = false;
         skillTimer = maxSkillTimer;
         skillCooldown = maxSkillCooldown;
@@ -76,11 +76,11 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
         if (powerfulShootTimer <= 0)
         {
             powerfulShootTimer = timeToNextPowerfulShoot;
-            readyToPowerfulShoot = true;
+            powerfullCannonReady = true;
             powerfulCannonSelected = (powerfulCannonSelected == 1) ? 0 : 1;
 
         }
-        if (!readyToPowerfulShoot)
+        if (!powerfullCannonReady)
         {
             powerfulShootTimer -= 1 * Time.deltaTime;
         }
@@ -107,6 +107,11 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
 
     }
 
+    public bool IsSkillActivated()
+    {
+        return skillActivated;
+    }
+
     public float GetMaxSillCooldown()
     {
         return maxSkillCooldown;
@@ -123,41 +128,90 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
         {
             readyToNormalShoot = false;
             if( mainCannonSelected == 1)
-            {
-                BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
-                bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
-                bulletBehaviour.SetDamage(normalShootDamage);
- 
+            {  
+                if (PhotonNetwork.IsConnected)
+                {
+                    GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet blue", mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
+                    BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+                    bulletBehaviour.SetDamage(normalShootDamage);
+                }
+                else
+                {
+                    BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
+                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+                    bulletBehaviour.SetDamage(normalShootDamage);
+                }
+                
+
             }
             else
             {
-                BulletBehaviour bulletBehaviour2 = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
-                bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                bulletBehaviour2.SetProjectileSpeed(normalShootSpeed);
-                bulletBehaviour2.SetDamage(normalShootDamage);
+                if (PhotonNetwork.IsConnected)
+                {
+                    GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet blue", mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+                    BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+                    bulletBehaviour.SetDamage(normalShootDamage);
+                }
+                else
+                {
+                    BulletBehaviour bulletBehaviour2 = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+                    bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                    bulletBehaviour2.SetProjectileSpeed(normalShootSpeed);
+                    bulletBehaviour2.SetDamage(normalShootDamage);
+                }
+                
             }
             
         }
 
         if (skillActivated)
         {
-            if (readyToPowerfulShoot)
+            if (powerfullCannonReady)
             {
-                readyToPowerfulShoot = false;
+                powerfullCannonReady = false;
                 if (powerfulCannonSelected == 1)
                 {
+                    if (PhotonNetwork.IsConnected)
+                    {
+                        GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet red", mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
+                        BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+                        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
+                        bulletBehaviour.SetDamage(powerfulShootDamage);
+                    }
+                    else
+                    {
                     BulletBehaviour bulletBehaviour = Instantiate(powerfulCannonBullet, powerfulCannonLeftSpawnPoint.position, powerfulCannonLeftSpawnPoint.rotation);
                     bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
                     bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
                     bulletBehaviour.SetDamage(powerfulShootDamage);
+                    }
+
                 }
                 else
                 {
-                    BulletBehaviour bulletBehaviour2 = Instantiate(powerfulCannonBullet, powerfulCannonRightSpawnPoint.position, powerfulCannonRightSpawnPoint.rotation);
-                    bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour2.SetProjectileSpeed(powerfulShootSpeed);
-                    bulletBehaviour2.SetDamage(powerfulShootDamage);
+                    if (PhotonNetwork.IsConnected)
+                    {
+                        GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet red", mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+                        BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+                        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
+                        bulletBehaviour.SetDamage(powerfulShootDamage);
+                    }
+                    else
+                    {
+                        BulletBehaviour bulletBehaviour2 = Instantiate(powerfulCannonBullet, powerfulCannonRightSpawnPoint.position, powerfulCannonRightSpawnPoint.rotation);
+                        bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+                        bulletBehaviour2.SetProjectileSpeed(powerfulShootSpeed);
+                        bulletBehaviour2.SetDamage(powerfulShootDamage);
+                    }
+
+                    
                 }
 
             }
@@ -178,6 +232,8 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     {
 
     }
+
+    
 
 
 

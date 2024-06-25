@@ -4,9 +4,12 @@ using UnityEngine;
 
 public interface ISpacecraftInterface
 {
+    
     void NormalShot();
 
     void ActivateSkill();
 
     void ActivateSpecial();
+
+
 }
