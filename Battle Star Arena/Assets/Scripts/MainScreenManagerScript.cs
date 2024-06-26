@@ -24,7 +24,7 @@ public class MainScreenManagerScript : MonoBehaviour
 
     public void LoadTrainningStage()
     {
-        SceneManager.LoadScene("Trainning Stage");
+        SceneManager.LoadScene("Spacecraft Selection Screen");
     }
 
    

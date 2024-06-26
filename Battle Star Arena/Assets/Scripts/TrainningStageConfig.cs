@@ -30,7 +30,7 @@ public class TrainningStageConfig : MonoBehaviour
         Debug.Log("click");
         if(selectedSpacecraftPrefab != null)
         {
-            SceneManager.LoadScene("Trainning Stage");
+            SceneManager.LoadScene("Load Screen - Trainning Area");
         }
        
     }
