@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpacecraftNavigation : MonoBehaviour,IPunObservable
+public class SpacecraftNavigation : MonoBehaviour//,IPunObservable
 {
     private Rigidbody rig;
     private float rollAxis;
@@ -89,29 +89,20 @@ public class SpacecraftNavigation : MonoBehaviour,IPunObservable
 
     private void FixedUpdate()
     {
-        if (GetComponent<PhotonView>().IsMine)
+        if (!PhotonNetwork.InRoom || GetComponent<PhotonView>().IsMine)
         {
             rig.AddForce((thurst + boostStrength) * transform.forward);
             rig.AddTorque(-rollAxis * rollForce * transform.forward);
             rig.AddTorque(-pitchAxis * pithForce * transform.right);
             rig.AddTorque(yawAxis * yawForce * transform.up);
         }
-        else
-        {
-            float dis = Vector3.Distance(networkPosition, rig.position);
-            Debug.Log(networkPosition);
-            Debug.Log("Distance: " + dis);
-            rig.position = networkPosition;
-            rig.rotation = networkRotation;
-            //rig.position = Vector3.MoveTowards(rig.position,networkPosition,Time.fixedDeltaTime);
-            //rig.rotation = Quaternion.RotateTowards(rig.rotation,networkRotation,Time.fixedDeltaTime * 100f);
-        }
+        
             
         
 
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
         if (stream.IsWriting)
@@ -130,7 +121,7 @@ public class SpacecraftNavigation : MonoBehaviour,IPunObservable
 
             networkPosition += rig.velocity * lag;
         }
-    }
+    } */
 
     public float GetRollAxis()
     {

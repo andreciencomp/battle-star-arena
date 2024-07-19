@@ -30,7 +30,8 @@ public class Spacecraft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("side: "+ side + "player: " + PhotonNetwork.LocalPlayer.NickName +  "-HP: " + hp);
+        //Debug.Log("side: "+ side + "player: " + PhotonNetwork.LocalPlayer.NickName +  "-HP: " + hp);
+        //Debug.Log("speed: " + GetComponent<Rigidbody>().velocity.magnitude * 3.6f);
         if(hp <= 0 && state == "FLYING")
         {
             if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)

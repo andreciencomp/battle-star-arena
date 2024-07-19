@@ -44,6 +44,7 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     private bool skillActivated;
     private Rigidbody rigSpacecraft;
 
+
     
     void Start()
     {
@@ -149,6 +150,7 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     {
         float delta = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
         BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+
         Rigidbody rigBullet = bulletBehaviour.gameObject.GetComponent<Rigidbody>();
         rigBullet.position += rigSpacecraft.velocity * delta;
         bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);

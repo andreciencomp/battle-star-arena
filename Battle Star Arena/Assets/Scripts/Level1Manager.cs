@@ -79,9 +79,9 @@ public class Level1Manager : MonoBehaviour
                 levelState = "RUNNING";
                 break;
             case "RUNNING":
-                Debug.Log("Running");
                 break;
         }
+        Debug.Log("level-state: " + levelState);
     }
 
     public void InstantiateSpaceCraft()
@@ -93,6 +93,10 @@ public class Level1Manager : MonoBehaviour
             spacecraft.SetSide(1);
             spacecraft.SetState("FLYING");
             spacecraft.SetPilotName(PhotonNetwork.LocalPlayer.NickName);
+            GameObject gaugesPrefab = Resources.Load("AvengerIGauges") as GameObject;
+            GameObject gauges = Instantiate(gaugesPrefab,Vector3.zero,Quaternion.identity);
+            AvengerIGauges avengerIGauges = gauges.GetComponent<AvengerIGauges>();
+            avengerIGauges.SetUPGauges(spacecraftObject);
 
             if (spacecraftObject != null)
             {
@@ -107,6 +111,10 @@ public class Level1Manager : MonoBehaviour
             spacecraft.SetSide(2);
             spacecraft.SetState("FLYING");
             spacecraft.SetPilotName(PhotonNetwork.LocalPlayer.NickName);
+            GameObject gaugesPrefab = Resources.Load("AvengerIGauges") as GameObject;
+            GameObject gauges = Instantiate(gaugesPrefab, Vector3.zero, Quaternion.identity);
+            AvengerIGauges avengerIGauges = gauges.GetComponent<AvengerIGauges>();
+            avengerIGauges.SetUPGauges(spacecraftObject);
             if (spacecraftObject != null)
             {
                 spacecraftCamera.LookAt = spacecraftObject.transform;

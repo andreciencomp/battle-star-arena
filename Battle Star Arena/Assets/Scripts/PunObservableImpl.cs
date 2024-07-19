@@ -10,6 +10,7 @@ public class PunObservableImpl : MonoBehaviour,IPunObservable
     void Start()
     {
         rig = GetComponent<Rigidbody>();
+
         //SendRate default = 30
         //PhotonNetwork.SendRate = 30;
         //SerializationRate default = 10
@@ -27,20 +28,20 @@ public class PunObservableImpl : MonoBehaviour,IPunObservable
 
         if (stream.IsWriting)
         {
-            stream.SendNext(rig.position);
-            stream.SendNext(rig.rotation);
-            stream.SendNext(rig.velocity);
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+           // stream.SendNext(transform.velocity);
         }
         else
         {
             
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            rig.position = (Vector3)stream.ReceiveNext();
-            rig.rotation = (Quaternion)stream.ReceiveNext();
-            rig.velocity = (Vector3)stream.ReceiveNext();
+            transform.position = (Vector3)stream.ReceiveNext();
+            transform.rotation = (Quaternion)stream.ReceiveNext();
+            //rig.velocity = (Vector3)stream.ReceiveNext();
 
 
-            rig.position += rig.velocity * lag;
+            transform.position += transform.position * lag;
             
             
         }

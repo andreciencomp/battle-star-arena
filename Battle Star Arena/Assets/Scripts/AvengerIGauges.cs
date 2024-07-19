@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class AvengerIGauges : MonoBehaviour
 {
-    [SerializeField]
     private Rigidbody spacecraftRigidbody;
-    [SerializeField]
     private SpacecraftNavigation spacecraftNavigation;
-    [SerializeField]
     private AvengerI avengerI;
     [SerializeField]
     private TMPro.TextMeshProUGUI speedText;
@@ -20,6 +17,13 @@ public class AvengerIGauges : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void SetUPGauges(GameObject spacecraft)
+    {
+        spacecraftRigidbody = spacecraft.GetComponent<Rigidbody>();
+        spacecraftNavigation = spacecraft.GetComponent<SpacecraftNavigation>();
+        avengerI = spacecraft.GetComponent<AvengerI>();
     }
 
     // Update is called once per frame

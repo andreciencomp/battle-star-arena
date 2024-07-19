@@ -970,6 +970,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbcb800ccfce801449476e9b94212122, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6766901161992209618}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbcb800ccfce801449476e9b94212122, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 852192908201968843}
     - targetCorrespondingSourceObject: {fileID: -2196984904138765820, guid: fbcb800ccfce801449476e9b94212122, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4507253670512503073}
@@ -1045,7 +1048,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: 7323689114143387999}
+  - {fileID: 852192908201968843}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1122,9 +1125,9 @@ MonoBehaviour:
   rollForce: 50
   pithForce: 60
   yawForce: 10
-  thurst: 500
-  maxBoostStrength: 1000
-  boostIncrementRate: 1000
+  thurst: 250
+  maxBoostStrength: 500
+  boostIncrementRate: 500
   maxBoostAmount: 100
   boostAmountConsumitonRate: 10
   boostAmountRechargeRate: 20
@@ -1140,7 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5adfc39f577e7f43b00dfa00a91a55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToNextNormalShoot: 0.03
+  timeToNextNormalShoot: 0.05
   timeToNextPowerfulShoot: 0.03
   normalShootDamage: 10
   powerfulShootDamage: 20
@@ -1150,8 +1153,8 @@ MonoBehaviour:
   powerfulCannonBullet: {fileID: 980138725977958421, guid: 06a15d7b2be3f2b459a5a5e007db0ac1, type: 3}
   powerfulCannonLeftSpawnPoint: {fileID: 1170617780416049395}
   powerfulCannonRightSpawnPoint: {fileID: 8267151806269538272}
-  normalShootSpeed: 1200
-  powerfulShootSpeed: 1300
+  normalShootSpeed: 250
+  powerfulShootSpeed: 300
   maxSkillTimer: 10
   maxSkillCooldown: 10
 --- !u!114 &6766901161992209618
@@ -1161,8 +1164,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7621723993321208475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbd3adca16be81d41be3fbc55efd195f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &852192908201968843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7621723993321208475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
