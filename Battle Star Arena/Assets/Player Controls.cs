@@ -153,7 +153,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Keyboard"",
                     ""id"": ""e65021db-5435-4999-b6b6-f02a364d0e14"",
                     ""path"": ""1DAxis"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(pressPoint=0.01)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pitch"",
@@ -161,7 +161,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""Negative"",
                     ""id"": ""2d38f876-7d08-4ef3-907e-e7d0551ba842"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
@@ -172,7 +172,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""Positive"",
                     ""id"": ""ee391c17-1031-4e79-8dec-dc0072f06b4c"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",

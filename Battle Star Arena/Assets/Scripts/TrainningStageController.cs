@@ -18,6 +18,7 @@ public class TrainningStageController : MonoBehaviour
         trainningConfig = GameObject.Find("TrainningAreaConfig").GetComponent<TrainningStageConfig>();
         GameObject spacecraft = Instantiate(trainningConfig.GetSelectedSpacecraftPrefab(), spacecraftSpawnPoint.position, spacecraftSpawnPoint.rotation);
         Spacecraft spacecraftBehaviour = spacecraft.GetComponent<Spacecraft>();
+        spacecraftBehaviour.SetState("FLYING");
         spacecraftCamera.m_Follow = spacecraft.transform;
         spacecraftCamera.m_LookAt = spacecraft.transform;
         if (spacecraftBehaviour.GetSpacecraftName() == "Avenger I")

@@ -13,6 +13,11 @@ public class ConnectionManagerScript : MonoBehaviourPunCallbacks
 
     }
 
+    private void Start()
+    {
+
+    }
+
 
     public override void OnConnectedToMaster()
     {
@@ -57,4 +62,7 @@ public class ConnectionManagerScript : MonoBehaviourPunCallbacks
         LobbyManagerScript lobby = GameObject.FindAnyObjectByType(typeof(LobbyManagerScript)) as LobbyManagerScript;
         lobby.ListRooms(roomList);
     }
+
 }
+
+

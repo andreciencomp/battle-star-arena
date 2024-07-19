@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
@@ -15,6 +16,8 @@ public class BulletBehaviour : MonoBehaviour
     private float damage = 5;
     private string username = "unknown";
     private float shooterSpeed;
+    [SerializeField]
+    private GameObject explosionPrefab;
 
     void Start()
     {
@@ -74,4 +77,12 @@ public class BulletBehaviour : MonoBehaviour
     public void SetSide(int side){
         this.side = side;
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        GameObject.Instantiate(explosionPrefab, transform.position, transform.rotation);
+        Destroy(this.gameObject);
+    }
+
+    
 }

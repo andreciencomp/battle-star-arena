@@ -42,10 +42,12 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     private float maxSkillCooldown = 360;
     private float skillCooldown;
     private bool skillActivated;
+    private Rigidbody rigSpacecraft;
 
     
     void Start()
     {
+        rigSpacecraft = GetComponent<Rigidbody>();
         mainCannonSelected = 1;
         powerfulCannonSelected = 1;
         normalShootTimer = timeToNextNormalShoot;
@@ -60,6 +62,8 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     // Update is called once per frame
     void Update()
     {
+        Spacecraft spacecraft = GetComponent<Spacecraft>();
+        Debug.Log(spacecraft.GetHP());
         
         if(normalShootTimer <= 0)
         {
@@ -121,6 +125,77 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
     {
         return skillCooldown;
     }
+    [PunRPC]
+    public void InstantiateNormalBulletLeft(PhotonMessageInfo info)
+    {
+        float delta = Mathf.Abs((float) (PhotonNetwork.Time - info.SentServerTime));
+        BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
+        Rigidbody rigBullet = bulletBehaviour.gameObject.GetComponent<Rigidbody>();
+        rigBullet.position += rigSpacecraft.velocity * delta; 
+        bulletBehaviour.SetShooterSpeed(rigSpacecraft.velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+        bulletBehaviour.SetDamage(normalShootDamage);
+
+    }
+    public void InstantiateNormalBulletLeft()
+    {
+        BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
+        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+        bulletBehaviour.SetDamage(normalShootDamage);
+    }
+    [PunRPC]
+    public void InstantiateNormalBulletRight(PhotonMessageInfo info)
+    {
+        float delta = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+        BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+        Rigidbody rigBullet = bulletBehaviour.gameObject.GetComponent<Rigidbody>();
+        rigBullet.position += rigSpacecraft.velocity * delta;
+        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+        bulletBehaviour.SetDamage(normalShootDamage);
+
+       
+    }
+    public void InstantiateNormalBulletRight()
+    {
+        BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
+        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
+        bulletBehaviour.SetDamage(normalShootDamage);
+    }
+    [PunRPC]
+    public void InstantiatePowerfulBulletLeft(PhotonMessageInfo info)
+    {
+        float delta = (float)(PhotonNetwork.Time - info.SentServerTime);
+        BulletBehaviour bulletBehaviour = Instantiate(powerfulCannonBullet, powerfulCannonLeftSpawnPoint.position * Mathf.Abs(delta), powerfulCannonLeftSpawnPoint.rotation);
+        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
+        bulletBehaviour.SetDamage(powerfulShootDamage);
+    }
+    public void InstantiatePowerfulBulletLeft()
+    {
+        BulletBehaviour bulletBehaviour = Instantiate(powerfulCannonBullet, powerfulCannonLeftSpawnPoint.position, powerfulCannonLeftSpawnPoint.rotation);
+        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
+        bulletBehaviour.SetDamage(powerfulShootDamage);
+    }
+    [PunRPC]
+    public void InstantiatePowerfulBulletRight(PhotonMessageInfo info)
+    {
+        float delta = (float)(PhotonNetwork.Time - info.SentServerTime);
+        BulletBehaviour bulletBehaviour2 = Instantiate(powerfulCannonBullet, powerfulCannonRightSpawnPoint.position * delta, powerfulCannonRightSpawnPoint.rotation);
+        bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour2.SetProjectileSpeed(powerfulShootSpeed);
+        bulletBehaviour2.SetDamage(powerfulShootDamage);
+    }
+    public void InstantiatePowerfulBulletRight()
+    {
+        BulletBehaviour bulletBehaviour2 = Instantiate(powerfulCannonBullet, powerfulCannonRightSpawnPoint.position, powerfulCannonRightSpawnPoint.rotation);
+        bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
+        bulletBehaviour2.SetProjectileSpeed(powerfulShootSpeed);
+        bulletBehaviour2.SetDamage(powerfulShootDamage);
+    }
 
     public void NormalShot()
     {
@@ -131,40 +206,23 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
             {  
                 if (PhotonNetwork.IsConnected)
                 {
-                    GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet blue", mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
-                    BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
-                    bulletBehaviour.SetDamage(normalShootDamage);
+                    GetComponent<PhotonView>().RPC("InstantiateNormalBulletLeft", RpcTarget.All);
                 }
                 else
                 {
-                    BulletBehaviour bulletBehaviour = Instantiate(normalCannonBullet, mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
-                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
-                    bulletBehaviour.SetDamage(normalShootDamage);
+                    InstantiateNormalBulletLeft();
                 }
-                
-
             }
             else
             {
                 if (PhotonNetwork.IsConnected)
                 {
-                    GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet blue", mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
-                    BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour.SetProjectileSpeed(normalShootSpeed);
-                    bulletBehaviour.SetDamage(normalShootDamage);
+                    GetComponent<PhotonView>().RPC("InstantiateNormalBulletRight", RpcTarget.All);
                 }
                 else
                 {
-                    BulletBehaviour bulletBehaviour2 = Instantiate(normalCannonBullet, mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
-                    bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour2.SetProjectileSpeed(normalShootSpeed);
-                    bulletBehaviour2.SetDamage(normalShootDamage);
+                    InstantiateNormalBulletRight();
                 }
-                
             }
             
         }
@@ -178,18 +236,11 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
                 {
                     if (PhotonNetwork.IsConnected)
                     {
-                        GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet red", mainCannonLeftSpawnPoint.position, mainCannonLeftSpawnPoint.rotation);
-                        BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-                        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
-                        bulletBehaviour.SetDamage(powerfulShootDamage);
+                        GetComponent<PhotonView>().RPC("InstantiatePowerfulBulletLeft",RpcTarget.All);
                     }
                     else
                     {
-                    BulletBehaviour bulletBehaviour = Instantiate(powerfulCannonBullet, powerfulCannonLeftSpawnPoint.position, powerfulCannonLeftSpawnPoint.rotation);
-                    bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                    bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
-                    bulletBehaviour.SetDamage(powerfulShootDamage);
+                        InstantiatePowerfulBulletLeft();
                     }
 
                 }
@@ -197,27 +248,16 @@ public class AvengerI : MonoBehaviour,ISpacecraftInterface
                 {
                     if (PhotonNetwork.IsConnected)
                     {
-                        GameObject bullet = PhotonNetwork.Instantiate("Cannon Bullet red", mainCannonRightSpawnPoint.position, mainCannonRightSpawnPoint.rotation);
-                        BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-                        bulletBehaviour.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                        bulletBehaviour.SetProjectileSpeed(powerfulShootSpeed);
-                        bulletBehaviour.SetDamage(powerfulShootDamage);
+                        GetComponent<PhotonView>().RPC("InstantiatePowerfulBulletRight",RpcTarget.All);
                     }
                     else
                     {
-                        BulletBehaviour bulletBehaviour2 = Instantiate(powerfulCannonBullet, powerfulCannonRightSpawnPoint.position, powerfulCannonRightSpawnPoint.rotation);
-                        bulletBehaviour2.SetShooterSpeed(GetComponent<Rigidbody>().velocity.magnitude);
-                        bulletBehaviour2.SetProjectileSpeed(powerfulShootSpeed);
-                        bulletBehaviour2.SetDamage(powerfulShootDamage);
-                    }
-
-                    
+                        InstantiatePowerfulBulletRight();
+                    } 
                 }
 
             }
         }
-
-
     }
 
     public void ActivateSkill()

@@ -7,10 +7,10 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Terrain Layer - Trainning Stage
-  m_DiffuseTexture: {fileID: 2800000, guid: de3b84888fb767b488f43c7f759a32e3, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: 228d88625629f054eaa4c3c0e0a90ecd, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 6e088ec3c7322444283b24e0bdb241a0, type: 3}
+  m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 1000, y: 1000}
+  m_TileSize: {x: 20, y: 20}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 1, g: 0.9764151, b: 0.9764151, a: 0}
   m_Metallic: 0

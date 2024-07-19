@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpacecraftNavigation : MonoBehaviour
+public class SpacecraftNavigation : MonoBehaviour,IPunObservable
 {
     private Rigidbody rig;
     private float rollAxis;
@@ -31,6 +32,10 @@ public class SpacecraftNavigation : MonoBehaviour
     private float boostAmountRechargeRate = 20;
     private float boostAmount;
     private bool boostReady;
+    private Vector3 networkPosition;
+    private Quaternion networkRotation;
+
+
 
     void Start()
     {
@@ -38,11 +43,17 @@ public class SpacecraftNavigation : MonoBehaviour
         boostStrength = 0;
         boostAmount = 0;
         boostReady = false;
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 90;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
+
         if (boostActivated && boostReady)
         {
             boostStrength = (boostStrength + boostIncrementRate * Time.deltaTime) >= maxBoostStrength ? maxBoostStrength : boostStrength + boostIncrementRate * Time.deltaTime;
@@ -73,19 +84,52 @@ public class SpacecraftNavigation : MonoBehaviour
             }
         }
 
-        //Debug.Log("boostReady: " + boostReady + " boostAmount: " + boostAmount + " boostStrength: " +  boostStrength + " boostActivated: " + boostActivated);
 
     }
 
     private void FixedUpdate()
     {
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            rig.AddForce((thurst + boostStrength) * transform.forward);
+            rig.AddTorque(-rollAxis * rollForce * transform.forward);
+            rig.AddTorque(-pitchAxis * pithForce * transform.right);
+            rig.AddTorque(yawAxis * yawForce * transform.up);
+        }
+        else
+        {
+            float dis = Vector3.Distance(networkPosition, rig.position);
+            Debug.Log(networkPosition);
+            Debug.Log("Distance: " + dis);
+            rig.position = networkPosition;
+            rig.rotation = networkRotation;
+            //rig.position = Vector3.MoveTowards(rig.position,networkPosition,Time.fixedDeltaTime);
+            //rig.rotation = Quaternion.RotateTowards(rig.rotation,networkRotation,Time.fixedDeltaTime * 100f);
+        }
+            
         
 
-        rig.AddForce((thurst + boostStrength) * transform.forward);
-        rig.AddTorque(- rollAxis * rollForce * transform.forward);
-        rig.AddTorque(- pitchAxis * pithForce * transform.right);
-        rig.AddTorque(yawAxis * yawForce * transform.up);
-        
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+        if (stream.IsWriting)
+        {
+            stream.SendNext(rig.position);
+            stream.SendNext(rig.rotation);
+            stream.SendNext(rig.velocity);
+        }
+        else
+        {
+
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            rig.velocity = (Vector3)stream.ReceiveNext();
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+
+            networkPosition += rig.velocity * lag;
+        }
     }
 
     public float GetRollAxis()
@@ -148,7 +192,11 @@ public class SpacecraftNavigation : MonoBehaviour
         this.boostAmount = boostAmount;
     }
 
- 
+     
 
-    
+
+
+
+
+
 }
