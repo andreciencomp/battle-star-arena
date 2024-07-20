@@ -1125,9 +1125,9 @@ MonoBehaviour:
   rollForce: 50
   pithForce: 60
   yawForce: 10
-  thurst: 250
-  maxBoostStrength: 500
-  boostIncrementRate: 500
+  thurst: 400
+  maxBoostStrength: 200
+  boostIncrementRate: 200
   maxBoostAmount: 100
   boostAmountConsumitonRate: 10
   boostAmountRechargeRate: 20
